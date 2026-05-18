@@ -97,6 +97,19 @@
         @keyframes pulso { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
         .btn-final-epic { background: var(--neon-yellow); color: #000; box-shadow: 0 0 30px var(--neon-yellow); font-size: 1.4rem; width: 100%; border-color: var(--neon-yellow); animation: pulso 1.5s infinite; padding: 20px; margin-top: 30px;}
         .btn-final-epic:hover { background: #fff; color: #000; box-shadow: 0 0 40px #fff; animation: none; transform: scale(1.05);}
+
+        /* 🛑 PANTALLA GRANDE DE BLOQUEO (STOP FASE DE DATA) */
+        .stop-overlay {
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 10, 0.98); border-radius: 15px; z-index: 2000;
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 35px; box-sizing: border-box; border: 3px solid var(--neon-magenta);
+            box-shadow: 0 0 40px var(--neon-magenta); text-align: center; backdrop-filter: blur(10px);
+        }
+        .stop-title {
+            font-size: 3.8rem; color: #ff2222; text-shadow: 0 0 20px #ff2222, 0 0 40px #ff2222;
+            margin-bottom: 15px; font-weight: 900; letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
@@ -124,8 +137,8 @@
         <p><strong>Regras do Festival:</strong></p>
         <ul style="padding-left: 20px;">
             <li>🎸 <strong>LIBERDADE TOTAL:</strong> Podes escoller a orde das pistas como queiras! Explora os Sub-escenarios dende o Escenario Principal ou dálle a Pista Aleatoria.</li>
-            <li>📍 Abre o link, <strong>xoga SÓ A ROLDA ACTUAL</strong> e mira a túa marxe de erro en metros. Podes pechar o mapa unha vez e introducir o dato onde se indique.</li>
-            <li>⏱️ <strong style="color: var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta);">TEMPO LÍMITE:</strong> Observa ben que cada reto ten o seu propio tempo asignado. OLLO! Cando abras o mapa o reloxo comezará a correr. Se chega a cero, obrigarache a disparar a cegas!</li>
+            <li>📍 Abre o link, <strong>xoga SÓ A ROLDA ACTUAL</strong> e mira a túa marxe de erro en metros. Podes pechar o mapa uma vez e introducir o dato onde se indique.</li>
+            <li>⏱️ <strong style="color: var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta);">TEMPO LÍMITE:</strong> Observa bem que cada reto ten o seu propio tempo asignado. OLLO! Cando abras o mapa o reloxo comezará a correr. Se chega a cero, obrigarache a disparar a cegas!</li>
             <li>⚠️ <strong>Se fallas os metros:</strong> A web comunicará o erro. Terás que volver ao GeoGuessr e darlle a "Xogar seguinte rolda" para volver tentalo. Tes 5 intentos por pista.</li>
             <li>📅 Nalgunhas probas, ademais da ubicación, terás que adiviñar unha palabra ou a <strong>data exacta</strong> da lembranza.</li>
         </ul>
@@ -177,6 +190,9 @@
 
 <div class="container" id="game-screen">
     <button class="btn btn-back btn-back-full" onclick="volverDesdeJuego()">⬅️ GARDAR E VOLVER Á LISTA</button>
+    
+    <div id="stop-overlay" class="stop-overlay"></div>
+
     <div id="game-content" style="text-align: center;"></div>
     <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px dashed #555;">
         <button class="btn btn-reset" onclick="resetearMisionActual()">⚠️ RESETEAR TRACK ACTUAL</button>
@@ -188,7 +204,7 @@
     <h3 style="color: var(--white); margin-bottom: 30px;">Completaches a Xira Mundial do teu 32 Aniversario</h3>
     
     <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un experto da xeografía festiva e sentimental.</p>
-    <p style="font-size: 1.2rem;">But agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
+    <p style="font-size: 1.2rem;">Pero isto non remata aquí. Como ben sabes, as oposicións sácannos moito tempo... así que teño un dobre agasallo final preparado para ti!</p>
     
     <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 30px 20px; margin-top: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
         <h2 style="color: var(--neon-green); margin-top: 0; font-size: 1.2rem;">🎁 RECOMPENSA 1 🎁</h2>
@@ -197,7 +213,7 @@
 
     <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-magenta); padding: 30px 20px; margin-top: 25px; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);">
         <h2 style="color: var(--neon-magenta); margin-top: 0; font-size: 1.2rem;">💝 RECOMPENSA ESPECIAL EXTRA 💝</h2>
-        <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 15px; line-height: 1.5;">Porque sei o moito que custa estudar a oposición e o moito que te esforzas cada dia... ¡Mereces un descanso real!</p>
+        <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 15px; line-height: 1.5;">Because sei o moito que custa estudar a oposición e o moito que te esforzas cada dia... ¡Mereces un descanso real!</p>
         <img src="imaxes/RDIA.png" style="max-width: 100%; border-radius: 10px; border: 1px solid var(--neon-magenta); box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);">
     </div>
     
@@ -248,8 +264,6 @@
 
     window.onload = () => {
         // --- GRUPADO INTELIXENTE ABSOLUTO (ANTI-ERROS DE TEXTO E CACHÉ) ---
-        // Forzamos que calquera variante que conteña "ESCONDITE", "VOLTIO" ou "CAMIÑAR"
-        // se unifique nun único nome perfecto. Así esquéceste de problemas de caché en misiones.js!
         misionesData.forEach(m => {
             if (m.categoria) {
                 let catUpper = m.categoria.toUpperCase();
@@ -359,7 +373,7 @@
         document.getElementById('cat-misiones-container').innerHTML = html;
     }
 
-    function micientosAleatoria() {
+    function misionAleatoria() {
         let disponibles = misionesData.filter(m => estadoJuego[m.id].estado !== "completada");
         if(disponibles.length === 0) return;
         let randomMision = disponibles[Math.floor(Math.random() * disponibles.length)];
@@ -370,6 +384,7 @@
         idMisionActiva = id; let m = misionesData.find(x => x.id === id); let est = estadoJuego[id];
         if (est.estado === "sin_hacer") { est.estado = "pendiente"; guardarProgreso(); }
         ocultarTodo(); document.getElementById('game-screen').style.display = "block";
+        document.getElementById('stop-overlay').style.display = "none"; // Ocultar o STOP por defecto
 
         let mediaHTML = "";
         if(m.tipoMedia === "imagen") mediaHTML = `<img src="${m.archivoMedia}">`;
@@ -420,8 +435,20 @@
 
         if (acerto) {
             if (!isFechaPhase && m.requiereFecha) {
-                est.ubicacionOk = true; guardarProgreso(); alerta.className = "alert-box alert-success";
-                alerta.innerHTML = `📍 <b>BRUTAL! Ubicación superada.</b> Agora imos coa data...`; setTimeout(() => { abrirMision(idMisionActiva); }, 2000);
+                est.ubicacionOk = true; guardarProgreso();
+                
+                // 🛑 ACTIVAR O OVERLAY DO STOP EN GRANDE
+                let stopOverlay = document.getElementById('stop-overlay');
+                stopOverlay.style.display = 'flex';
+                stopOverlay.innerHTML = `
+                    <div class="stop-title">🛑 STOP! 🛑</div>
+                    <p style="font-size: 1.5rem; color: var(--neon-yellow); font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 5px var(--neon-yellow); letter-spacing: 1px;">ESTA QUIXERON COMPLICALA...</p>
+                    <p style="font-size: 1.25rem; line-height: 1.7; margin-bottom: 35px; max-width: 600px;">
+                        📍 <b>¡Ubicación superada con éxito!</b> <br><br>
+                        Pero ollo... este track ten trampa oculta. Para poderes conseguir o agasallo deste colega, agora vas ter que introducir a <b>DATA EXACTA</b> [cite: 17] na que pasou esta lembranza!
+                    </p>
+                    <button class="btn" style="border-color: var(--neon-magenta); color: var(--neon-magenta); font-size: 1.2rem; padding: 15px 35px; box-shadow: 0 0 15px var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta);" onclick="continuarFaseFecha()">ACEPTAR O RETO E METER DATA 📅</button>
+                `;
             } else {
                 est.estado = "completada"; guardarProgreso(); alerta.className = "alert-box alert-success";
                 alerta.innerHTML = `🎸 <b>BRUTAL! ACERTACHES!</b> 🎸<br>Agasallo desbloqueado: <br><span style="color:var(--white); text-transform:uppercase; font-size:1.3rem;">${m.regalo}</span>${m.textoPostAcerto ? `<div style="margin: 15px 0; color: #fff; font-weight: normal; font-size: 1rem; border-left: 3px solid var(--neon-cyan); padding-left: 10px; text-align: left;"><i>${m.textoPostAcerto}</i></div>` : ""}`;
@@ -440,6 +467,12 @@
                 alerta.innerHTML = msgError;
             }
         }
+    }
+
+    // Función para saltar do STOP á caixa da data
+    function continuarFaseFecha() {
+        document.getElementById('stop-overlay').style.display = 'none';
+        abrirMision(idMisionActiva);
     }
 
     function bajarDificultad(nuevoNivel) {

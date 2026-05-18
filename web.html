@@ -187,8 +187,8 @@
     <h1 style="color: var(--neon-yellow); text-shadow: var(--neon-yellow-glow); font-size: 3.5rem; margin-bottom: 10px;">🏆 NORABOA! 🏆</h1>
     <h3 style="color: var(--white); margin-bottom: 30px;">Completaches a Xira Mundial do teu 32 Aniversario</h3>
     
-    <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un experto da xeografía festiva e sentimental.</p>
-    <p style="font-size: 1.2rem;">Pero agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
+    <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un expert da xeografía festiva e sentimental.</p>
+    <p style="font-size: 1.2rem;">But agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
     
     <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 40px 20px; margin-top: 40px; border-radius: 15px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);">
         <h2 style="color: var(--neon-green); margin-top: 0;">🎁 RECOMPENSA DESBLOQUEADA 🎁</h2>
@@ -218,7 +218,8 @@
         let size = Math.floor(Math.random() * 50) + 60; 
         let el = elementoExistente || document.createElement('div');
         if(!elementoExistente) { el.className = 'floater-bounce'; container.appendChild(el); }
-        el.style.backgroundImage = `url('Imaxes/${numImg}.png')`; el.style.width = size + 'px'; el.style.height = size + 'px';
+        // CORRIXIDO DE "Imaxes/" A "imaxes/" POLA CARPETA DE GITHUB
+        el.style.backgroundImage = `url('imaxes/${numImg}.png')`; el.style.width = size + 'px'; el.style.height = size + 'px';
         let x = Math.random() * (window.innerWidth - size); let y = Math.random() * (window.innerHeight - size);
         let vx = (Math.random() - 0.5) * 1.5; let vy = (Math.random() - 0.5) * 1.5;
         if(Math.abs(vx) < 0.3) vx = vx > 0 ? 0.3 : -0.3; if(Math.abs(vy) < 0.3) vy = vy > 0 ? 0.3 : -0.3;
@@ -288,7 +289,6 @@
         document.getElementById('num-pendientes').innerText = pendientes.length;
         document.getElementById('num-sinhacer').innerText = sinHacer.length;
 
-        // ACTIVAR BOTÓN FINAL CANDO SUPERE AS 27
         if (completadasG.length === misionesData.length && misionesData.length > 0) {
             document.getElementById('btn-final-container').style.display = "block";
             document.getElementById('btn-random-game').style.display = "none";

@@ -133,7 +133,7 @@
     <h1>🎟️ VIP PASS: ALESS - 32 ANIVERSARIO 🎟️</h1>
     <div class="intro-box">
         <p>Benvido á túa <strong>Xira Mundial de Aniversario</strong>.</p>
-        <p>Hoxe vas ter que poñer a proba a túa memoria, a túa intuición e as túas dotes de orientación. Prepareiche un setlist con varias misións ocultas: poden ser recordos nosos, mensaxes de colegas ou lugares míticos.</p>
+        <p>Hoxe vas ter que poñer a proba a túa memoria, a túa intuición e as túas dotes de orientación. Prepareiche un setlist con varias misións ocultas: pueden ser recordos nosos, mensaxes de colegas ou lugares míticos.</p>
         <p><strong>Regras do Festival:</strong></p>
         <ul style="padding-left: 20px;">
             <li>🎸 <strong>LIBERDADE TOTAL:</strong> Podes escoller a orde das pistas como queiras! Explora os Sub-escenarios dende o Escenario Principal ou dálle a Pista Aleatoria.</li>
@@ -204,7 +204,7 @@
     <h3 style="color: var(--white); margin-bottom: 30px;">Completaches a Xira Mundial do teu 32 Aniversario</h3>
     
     <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un experto da xeografía festiva e sentimental.</p>
-    <p style="font-size: 1.2rem;">Pero isto non remata aquí. Como ben sabes, as oposicións sácannos moito tempo... así que teño un dobre agasallo final preparado para ti!</p>
+    <p style="font-size: 1.2rem;">But agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
     
     <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 30px 20px; margin-top: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
         <h2 style="color: var(--neon-green); margin-top: 0; font-size: 1.2rem;">🎁 RECOMPENSA 1 🎁</h2>
@@ -217,7 +217,10 @@
         <img src="imaxes/RDIA.png" style="max-width: 100%; border-radius: 10px; border: 1px solid var(--neon-magenta); box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);">
     </div>
     
-    <button class="btn btn-empezar" style="margin-top: 40px; font-size: 1rem; padding: 10px 20px;" onclick="volverHub()">⬅️ VOLVER AO FESTIVAL</button>
+    <div style="margin-top: 40px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <button class="btn btn-empezar" style="margin: 0; font-size: 1rem; padding: 12px 25px;" onclick="volverHub()">⬅️ VOLVER AO FESTIVAL</button>
+        <button class="btn" style="margin: 0; border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 15px rgba(57,255,20,0.2); font-size: 1rem; padding: 12px 25px;" onclick="reiniciarParaAless()">🔄 VOLVER A XOGAR</button>
+    </div>
 </div>
 
 <script src="misiones.js"></script>
@@ -308,6 +311,16 @@
     function volverDesdeCategoria() { entrarHub(); }
     function volverDesdeJuego() { ocultarTodo(); if (categoriaActiva !== "") { abrirCategoria(categoriaActiva); } else { entrarHub(); } }
     function abrirFinal() { ocultarTodo(); document.getElementById('final-screen').style.display = "block"; }
+    
+    // 🔄 FUNCIÓNS NOVAS PARA ACCIÓNS DO FINAL
+    function volverHub() { entrarHub(); }
+    function reiniciarParaAless() {
+        if (confirm("Seguro que queres borrar todo o progreso e volver a xogar o festival dende o principio? 🎸")) {
+            localStorage.removeItem('geoCumpleAless');
+            alert("Sistema reiniciado con éxito! Que comece o show de novo! 🚀");
+            window.location.reload();
+        }
+    }
 
     function getCategoryStyle(cat) {
         if (cat.includes("ESCONDITE")) return { icon: "🙈", img: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=500&q=80" };
@@ -373,7 +386,7 @@
         document.getElementById('cat-misiones-container').innerHTML = html;
     }
 
-    function misionAleatoria() {
+    function micientosAleatoria() {
         let disponibles = misionesData.filter(m => estadoJuego[m.id].estado !== "completada");
         if(disponibles.length === 0) return;
         let randomMision = disponibles[Math.floor(Math.random() * disponibles.length)];
@@ -384,7 +397,7 @@
         idMisionActiva = id; let m = misionesData.find(x => x.id === id); let est = estadoJuego[id];
         if (est.estado === "sin_hacer") { est.estado = "pendiente"; guardarProgreso(); }
         ocultarTodo(); document.getElementById('game-screen').style.display = "block";
-        document.getElementById('stop-overlay').style.display = "none"; // Ocultar o STOP por defecto
+        document.getElementById('stop-overlay').style.display = "none";
 
         let mediaHTML = "";
         if(m.tipoMedia === "imagen") mediaHTML = `<img src="${m.archivoMedia}">`;
@@ -398,12 +411,30 @@
             controlIntentos = `<div class="alert-box alert-error" style="display:block;">🚫 <b>OPORTUNIDADES ESGOTADAS!</b><br>Fallaches as 5 roldas. Pídelle a Alba que che reinicie este track dende as opcións.</div>`;
         } else {
             let isFechaPhase = (m.requiereFecha && est.ubicacionOk); let isTexto = m.tipoRespuesta === "texto";
-            let promptPregunta = isFechaPhase ? "📍 Ubicación correcta! Pero... <b>en que DATA foi?</b>" : isTexto ? "Cal é a túa resposta?" : `A cantos <b>metros</b> quedaches na Rolda ${est.intentos + 1}?`;
             let inputType = (isTexto || isFechaPhase) ? "text" : "number";
             let inputStyle = (isTexto || isFechaPhase) ? "width: 250px;" : "width: 120px;";
+            
+            let promptPregunta = "";
+            let placeholderText = "0";
+            
+            if (isTexto) {
+                promptPregunta = "Cal é a túa resposta?";
+                placeholderText = "Escribe aquí...";
+            } else if (isFechaPhase) {
+                let tenAno = /\d{4}/.test(m.fechaCorrecta);
+                let formatoExemplo = tenAno ? "19 de maio de 1994" : "19 de maio";
+                let textoFormato = tenAno ? "Día de mes de ANO" : "Día de mes";
+                
+                promptPregunta = `📍 Ubicación correcta! Pero... <b>en que DATA foi?</b><br><small style='color:var(--neon-yellow); font-size:0.95rem; font-weight:bold; text-shadow:0 0 3px #000;'>⚠️ Formato obligatorio: ${textoFormato} (Ex: ${formatoExemplo})</small>`;
+                placeholderText = `Ex: ${formatoExemplo}...`;
+            } else {
+                promptPregunta = `A cantos <b>metros</b> quedaches na Rolda ${est.intentos + 1}?`;
+                placeholderText = "0";
+            }
+            
             let divMarxe = (!isFechaPhase && !isTexto) ? `<div class="dificultad-indicator" id="info-nivel">Nivel actual: ${NOMBRES_NIVELES[est.dificultad]} (Marxe permitida: ${obtenerMargen(m, est.dificultad)}m)</div>` : "";
 
-            controlIntentos = `<div class="input-box"><p>${promptPregunta}</p><input type="${inputType}" id="distancia-input" placeholder="${(isTexto || isFechaPhase) ? 'Escribe aquí...' : '0'}" style="${inputStyle}"><br><br><button class="btn" onclick="comprobarRespuesta()" style="border-color:var(--neon-green); color:var(--neon-green);">COMPROBAR RESPOSTA</button>${divMarxe}<div class="attempts-badge" id="badge-intentos">Intentos gastados: ${est.intentos} / 5</div></div><div id="alerta-juego" class="alert-box"></div>`;
+            controlIntentos = `<div class="input-box"><p>${promptPregunta}</p><input type="${inputType}" id="distancia-input" placeholder="${placeholderText}" style="${inputStyle}"><br><br><button class="btn" onclick="comprobarRespuesta()" style="border-color:var(--neon-green); color:var(--neon-green);">COMPROBAR RESPOSTA</button>${divMarxe}<div class="attempts-badge" id="badge-intentos">Intentos gastados: ${est.intentos} / 5</div></div><div id="alerta-juego" class="alert-box"></div>`;
         }
 
         let botonGeoguessrHTML = "";
@@ -419,7 +450,10 @@
     }
 
     function obtenerMargen(mision, nivel) { return nivel === 0 ? mision.dificil : nivel === 1 ? mision.medio : mision.facil; }
-    function quitarAcentos(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+    function quitarAcentos(str) { 
+        if(!str) return "";
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().replace(/\s+/g, " "); 
+    }
 
     function comprobarRespuesta() {
         let inputEl = document.getElementById('distancia-input'); if (inputEl.value.trim() === "") return;
@@ -427,8 +461,16 @@
         let alerta = document.getElementById('alerta-juego'); alerta.style.display = "block";
         let acerto = false; let isFechaPhase = (m.requiereFecha && est.ubicacionOk); let isTexto = m.tipoRespuesta === "texto";
 
-        if (isFechaPhase) { if (quitarAcentos(inputEl.value.trim().toLowerCase()) === quitarAcentos(m.fechaCorrecta.trim().toLowerCase())) acerto = true; } 
-        else if (isTexto) { if (quitarAcentos(inputEl.value.trim().toLowerCase()) === quitarAcentos(m.respuestaCorrecta.trim().toLowerCase())) acerto = true; } 
+        let textoUsuario = inputEl.value.replace(/\u00a0/g, " ");
+        let textoCorrecto = m.fechaCorrecta ? m.fechaCorrecta.replace(/\u00a0/g, " ") : "";
+
+        if (isFechaPhase) { 
+            if (quitarAcentos(textoUsuario.toLowerCase()) === quitarAcentos(textoCorrecto.toLowerCase())) acerto = true; 
+        } 
+        else if (isTexto) { 
+            let txtResp = m.respuestaCorrecta ? m.respuestaCorrecta.replace(/\u00a0/g, " ") : "";
+            if (quitarAcentos(textoUsuario.toLowerCase()) === quitarAcentos(txtResp.toLowerCase())) acerto = true; 
+        } 
         else { if (parseFloat(inputEl.value) <= obtenerMargen(m, est.dificultad)) acerto = true; }
 
         est.intentos++; guardarProgreso(); document.getElementById('badge-intentos').innerText = `Intentos gastados: ${est.intentos} / 5`;
@@ -437,15 +479,19 @@
             if (!isFechaPhase && m.requiereFecha) {
                 est.ubicacionOk = true; guardarProgreso();
                 
-                // 🛑 ACTIVAR O OVERLAY DO STOP EN GRANDE
+                let tenAno = /\d{4}/.test(m.fechaCorrecta);
+                let formatoExemplo = tenAno ? "19 de maio de 1994" : "19 de maio";
+                let axudaFormato = tenAno ? "incluíndo o ANO (Ex: <i style='color:#fff;'>19 de maio de 1994</i>)" : "só o día e o mes (Ex: <i style='color:#fff;'>19 de maio</i>)";
+                
                 let stopOverlay = document.getElementById('stop-overlay');
                 stopOverlay.style.display = 'flex';
                 stopOverlay.innerHTML = `
                     <div class="stop-title">🛑 STOP! 🛑</div>
                     <p style="font-size: 1.5rem; color: var(--neon-yellow); font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 5px var(--neon-yellow); letter-spacing: 1px;">ESTA QUIXERON COMPLICALA...</p>
                     <p style="font-size: 1.25rem; line-height: 1.7; margin-bottom: 35px; max-width: 600px;">
-                        📍 <b>Ubicación superada con éxito!</b> <br><br>
-                        Pero ollo... este track ten trampa oculta. Para poder conseguir o agasallo deste colega, agora vas ter que introducir a <b>DATA EXACTA</b> na que pasou esta lembranza!
+                        📍 <b>¡Ubicación superada con éxito!</b><br><br>
+                        Pero ollo... este track ten trampa oculta. Para poderes conseguir o agasallo deste colega, agora vas ter que introducir a <b>DATA EXACTA</b> na que pasou esta lembranza!<br><br>
+                        <span style="color: var(--neon-cyan); font-weight: bold;">⚠️ NOTA FORMATO: Para esta proba tes que poñer ${axudaFormato} escrito exactamente así, con letras e sen barras.</span>
                     </p>
                     <button class="btn" style="border-color: var(--neon-magenta); color: var(--neon-magenta); font-size: 1.2rem; padding: 15px 35px; box-shadow: 0 0 15px var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta);" onclick="continuarFaseFecha()">ACEPTAR O RETO E METER DATA 📅</button>
                 `;
@@ -457,7 +503,11 @@
         } else {
             alerta.className = "alert-box alert-error"; inputEl.value = "";
             if (est.intentos >= 5) { alerta.innerHTML = `❌ <b>GAME OVER: Gastaches os 5 intentos!</b><br>Bloqueando pista...`; setTimeout(() => { abrirMision(idMisionActiva); }, 2000); } 
-            else if (isFechaPhase) { alerta.innerHTML = `❌ Fallaches a data! Pensa ben, quédanche ${5 - est.intentos} intentos.`; } 
+            else if (isFechaPhase) { 
+                let tenAno = /\d{4}/.test(m.fechaCorrecta);
+                let formatoExemplo = tenAno ? "19 de maio de 1994" : "19 de maio";
+                alerta.innerHTML = `❌ Fallaches a data! Lembra seguir o formato real (Ex: ${formatoExemplo}). Quédanche ${5 - est.intentos} intentos.`; 
+            } 
             else if (isTexto) { alerta.innerHTML = `❌ Fallaches, esa non é a resposta correcta! Quédanche ${5 - est.intentos} intentos.`; } 
             else {
                 let msgError = `❌ Demasiado lonxe! Toca xogar a <b>ROLDA ${est.intentos + 1}</b> no GeoGuessr.<br><br>Podes manter a dificultade ou baixala se te ves moi apurado:<br><br>`;
@@ -469,7 +519,6 @@
         }
     }
 
-    // Función para saltar do STOP á caixa da data
     function continuarFaseFecha() {
         document.getElementById('stop-overlay').style.display = 'none';
         abrirMision(idMisionActiva);

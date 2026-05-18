@@ -187,12 +187,18 @@
     <h1 style="color: var(--neon-yellow); text-shadow: var(--neon-yellow-glow); font-size: 3.5rem; margin-bottom: 10px;">🏆 NORABOA! 🏆</h1>
     <h3 style="color: var(--white); margin-bottom: 30px;">Completaches a Xira Mundial do teu 32 Aniversario</h3>
     
-    <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un expert da xeografía festiva e sentimental.</p>
-    <p style="font-size: 1.2rem;">But agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
+    <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un experto da xeografía festiva e sentimental.</p>
+    <p style="font-size: 1.2rem;">Pero isto non remata aquí. Como ben sabes, as oposicións sácannos moito tempo... así que teño un dobre agasallo final preparado para ti!</p>
     
-    <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 40px 20px; margin-top: 40px; border-radius: 15px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);">
-        <h2 style="color: var(--neon-green); margin-top: 0;">🎁 RECOMPENSA DESBLOQUEADA 🎁</h2>
-        <p style="font-size: 1.8rem; text-transform: uppercase; font-weight: bold; color: var(--white); margin: 20px 0; text-shadow: 0 0 10px var(--white);">1 Ano de GeoGuessr Élite</p>
+    <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 30px 20px; margin-top: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
+        <h2 style="color: var(--neon-green); margin-top: 0; font-size: 1.2rem;">🎁 RECOMPENSA 1 🎁</h2>
+        <p style="font-size: 1.6rem; text-transform: uppercase; font-weight: bold; color: var(--white); margin: 10px 0; text-shadow: 0 0 10px var(--white);">1 Ano de GeoGuessr Élite</p>
+    </div>
+
+    <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-magenta); padding: 30px 20px; margin-top: 25px; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);">
+        <h2 style="color: var(--neon-magenta); margin-top: 0; font-size: 1.2rem;">💝 RECOMPENSA ESPECIAL EXTRA 💝</h2>
+        <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 15px; line-height: 1.5;">Porque sei o moito que custa estudar a oposición e o moito que te esforzas cada día... ¡Mereces un descanso real!</p>
+        <img src="imaxes/RDIA.png" style="max-width: 100%; border-radius: 10px; border: 1px solid var(--neon-magenta); box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);">
     </div>
     
     <button class="btn btn-empezar" style="margin-top: 40px; font-size: 1rem; padding: 10px 20px;" onclick="volverHub()">⬅️ VOLVER AO FESTIVAL</button>
@@ -218,7 +224,6 @@
         let size = Math.floor(Math.random() * 50) + 60; 
         let el = elementoExistente || document.createElement('div');
         if(!elementoExistente) { el.className = 'floater-bounce'; container.appendChild(el); }
-        // CORRIXIDO DE "Imaxes/" A "imaxes/" POLA CARPETA DE GITHUB
         el.style.backgroundImage = `url('imaxes/${numImg}.png')`; el.style.width = size + 'px'; el.style.height = size + 'px';
         let x = Math.random() * (window.innerWidth - size); let y = Math.random() * (window.innerHeight - size);
         let vx = (Math.random() - 0.5) * 1.5; let vy = (Math.random() - 0.5) * 1.5;
@@ -241,7 +246,18 @@
         requestAnimationFrame(actualizarRebotadores);
     }
 
-    window.onload = () => { cargarGuardado(); renderHub(); iniciarRebotadores(); };
+    window.onload = () => {
+        // --- LIMPADOR AUTOMÁTICO ANTI-ERROS DE WORD ---
+        misionesData.forEach(m => {
+            if (m.categoria) {
+                m.categoria = m.categoria.trim().replace(/\s+/g, ' ').normalize("NFC");
+            }
+        });
+
+        cargarGuardado(); 
+        renderHub(); 
+        iniciarRebotadores(); 
+    };
 
     function cargarGuardado() {
         let guardado = localStorage.getItem('geoCumpleAless');

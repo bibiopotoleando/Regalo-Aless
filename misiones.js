@@ -148,7 +148,7 @@ const misionesData = [
         categoria: "ESCONDITE INGLÉS (sen mover as mans nin os pés)",
         autor: "IVÁN",
         titulo: "CHO-CHO-CHÓFER PARE EL TAXI",
-        texto: "Bota un ollo ao vídeo! E por se non o escoitas ben, aquí tes a proba de audio:<br><audio controls style='width:100%; margin-top:10px;'><source src='imaxes/M11.2.mp3'></audio>",
+        texto: "Bota un ollo ao vídeo! E por se non o escoitas ben, aquí tes a proba de audio:<br><audio controls style='width:100%; margin-top:10px;'><source src='imaxes/M11.2.mp4'></audio>",
         tipoMedia: "video",
         archivoMedia: "imaxes/M11.mp4",
         linkGeoguessr: "https://www.geoguessr.com/challenge/oJlgj8xUnuzRdDmk",

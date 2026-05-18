@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP PASS: ALESS - 32 ANIVERSARIO</title>
+    <style>
+        /* ESTILO NEON/FESTIVAL GALEGO */
+        :root {
+            --primary-bg: #0b0c10; --panel-bg: rgba(20, 25, 35, 0.85); 
+            --neon-magenta: #ff007f; --neon-cyan: #66fcf1; --neon-yellow: #ffe600; --neon-green: #39ff14;
+            --white: #ffffff;
+            --text-shadow: 0 0 10px var(--neon-magenta), 0 0 20px var(--neon-magenta);
+            --neon-cyan-glow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            --neon-yellow-glow: 0 0 10px var(--neon-yellow), 0 0 20px var(--neon-yellow);
+        }
+
+        body { background-color: var(--primary-bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; color: var(--white); display: flex; justify-content: center; align-items: center; min-height: 95vh; overflow-x: hidden; overflow-y: auto; }
+
+        /* GLOBO DE FONDO ESTÁTICO */
+        .bg-globe-container { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90vmin; height: 90vmin; max-width: 1000px; max-height: 1000px; border-radius: 50%; box-shadow: 0 0 60px rgba(102, 252, 241, 0.2), inset -20px -20px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255, 0, 127, 0.3); background: radial-gradient(circle at 30% 30%, #1a2a4a, #050810); z-index: -1; overflow: hidden; }
+        .bg-globe-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg'); background-size: 150%; background-position: 45% 15%; background-repeat: no-repeat; filter: invert(1) hue-rotate(180deg) contrast(1.5) drop-shadow(0 0 5px var(--neon-cyan)); opacity: 0.7; }
+        .bg-globe-colors { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,0,127,0.4), rgba(102,252,241,0.4), rgba(255,230,0,0.4), rgba(57,255,20,0.4)); mix-blend-mode: color; pointer-events: none; }
+        .bg-pin-portas { position: absolute; top: 31%; left: 47%; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -100%); z-index: 2; }
+        .pin-icon { width: 35px; height: 35px; border: 4px solid var(--neon-cyan); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 10px var(--neon-cyan); margin-bottom: 5px; background: rgba(0,0,0,0.5); position: relative; }
+        .pin-icon::after { content: ''; position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; background: var(--neon-cyan); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px var(--neon-cyan); }
+        .pin-label { color: var(--neon-cyan); font-weight: bold; font-size: 1.2rem; text-shadow: 0 0 10px var(--neon-cyan); border: 2px solid var(--neon-cyan); padding: 4px 10px; border-radius: 10px; background: rgba(11, 12, 16, 0.8); text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 10px rgba(102, 252, 241, 0.3); }
+
+        .floating-decorations { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; }
+        .floater-bounce { position: absolute; top: 0; left: 0; filter: drop-shadow(0 0 8px var(--neon-cyan)); background-size: contain; background-repeat: no-repeat; background-position: center; will-change: transform, opacity; }
+
+        .container { background: var(--panel-bg); width: 100%; max-width: 800px; padding: 40px 30px; border-radius: 15px; box-shadow: 0 0 30px rgba(102, 252, 241, 0.2); border: 2px solid var(--neon-cyan); position: relative; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 10; margin-top: 20px; margin-bottom: 80px; }
+        h1 { color: var(--white); text-align: center; font-size: 2.6rem; text-transform: uppercase; text-shadow: var(--text-shadow); letter-spacing: 2px; margin-bottom: 30px; line-height: 1.2; }
+        h2, h3 { color: var(--neon-cyan); text-align: center; text-transform: uppercase; text-shadow: var(--neon-cyan-glow); margin-top: 10px; font-size: 1.4rem; }
+        
+        .intro-box { background: rgba(0,0,0,0.7); padding: 30px; border-radius: 10px; margin-bottom: 30px; font-size: 1.1rem; line-height: 1.7; border-left: 5px dashed var(--neon-yellow); border-right: 5px dashed var(--neon-yellow); }
+        .header-stats { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.7); padding: 15px 25px; border-radius: 10px; margin-bottom: 25px; border: 1px solid var(--neon-magenta); box-shadow: inset 0 0 15px rgba(255,0,127,0.2); }
+        .progress-text { font-size: 1.3rem; font-weight: bold; color: var(--neon-yellow); text-shadow: 0 0 5px var(--neon-yellow); }
+
+        .categorias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .cat-card { background: #111; border: 2px solid #444; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 120px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .cat-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0.25; transition: opacity 0.3s; z-index: 0; }
+        .cat-card:hover { border-color: var(--neon-cyan); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(102, 252, 241, 0.3); }
+        .cat-card:hover .cat-bg { opacity: 0.5; }
+        .cat-card.activa { border-color: var(--neon-magenta); box-shadow: 0 0 20px rgba(255, 0, 127, 0.6); background: rgba(255, 0, 127, 0.1); }
+        .cat-card.activa .cat-bg { opacity: 0.4; }
+        .cat-content { position: relative; z-index: 1; }
+        .cat-icon { font-size: 2.5rem; display: block; margin-bottom: 8px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5)); }
+        .cat-title { font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: var(--white); letter-spacing: 1px; text-shadow: 2px 2px 4px #000; }
+
+        .btn-random { background: rgba(102, 252, 241, 0.1); color: var(--neon-cyan); border: 2px solid var(--neon-cyan); width: 100%; padding: 15px; font-size: 1.2rem; border-radius: 10px; cursor: pointer; transition: 0.3s; font-weight: bold; text-transform: uppercase; margin-bottom: 30px; text-shadow: 0 0 5px var(--neon-cyan); box-shadow: 0 0 15px rgba(102, 252, 241, 0.2); display: flex; align-items: center; justify-content: center; gap: 10px;}
+        .btn-random:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 25px var(--neon-cyan); text-shadow: none;}
+
+        .list-section { margin-bottom: 30px; }
+        .list-btn { width: 100%; background: #1a1a1a; color: white; text-align: left; padding: 18px; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: space-between; border-left: 6px solid #777; margin-bottom: 10px; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .list-btn.sin_hacer { border-left-color: var(--neon-cyan); }
+        .list-btn.pendiente { border-left-color: var(--neon-yellow); }
+        .list-btn.completada { border-left-color: var(--neon-green); }
+        .list-content { display: none; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 0 0 8px 8px; margin-bottom: 20px;}
+        .list-item { background: rgba(255,255,255,0.05); padding: 15px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.1); }
+        
+        .btn { background: transparent; color: var(--white); border: 2px solid var(--neon-cyan); padding: 12px 25px; border-radius: 5px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; text-transform: uppercase; transition: all 0.3s ease; font-size: 1rem; }
+        .btn:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
+        .btn-play { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        .btn-play:hover { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px var(--neon-cyan); }
+        .btn-back { border-color: #777; color: #ddd; margin-bottom: 25px; width: auto; display: inline-block;}
+        .btn-back:hover { background: #777; color: #fff; box-shadow: none; }
+        .btn-back-full { width: 100%; display: block; text-align: center; } 
+        .btn-maps { background: var(--neon-yellow); color: #000; border-color: var(--neon-yellow); display: block; text-align: center; margin: 15px auto; padding: 15px; font-size: 1.2rem; width: fit-content; border-radius: 8px; }
+        .btn-maps:hover { background: transparent; color: var(--neon-yellow); box-shadow: 0 0 20px var(--neon-yellow); }
+        .btn-empezar { background: var(--neon-magenta); color: #fff; border-color: var(--neon-magenta); font-size: 1.3rem; padding: 15px 40px; display: block; margin: 0 auto; box-shadow: 0 0 20px rgba(255,0,127,0.5);}
+        .btn-reset { border-color: #ff3333; color: #ff3333; font-size: 0.9rem; padding: 10px 20px;}
+        .btn-reset:hover { background: #ff3333; color: #fff; box-shadow: 0 0 15px #ff3333; }
+        
+        #hub-screen, #category-screen, #game-screen, #final-screen { display: none; }
+        
+        .media-box { background: rgba(0,0,0,0.6); padding: 20px; border-radius: 8px; margin: 25px 0; text-align: center; border: 1px solid rgba(255,255,255,0.1);}
+        img, video { max-width: 100%; border-radius: 8px; border: 1px solid var(--neon-cyan); }
+        audio { width: 100%; filter: invert(1) hue-rotate(180deg); }
+        
+        .input-box { background: rgba(0,0,0,0.8); padding: 25px; border-radius: 10px; border: 2px dashed var(--neon-magenta); text-align: center;}
+        input[type="number"], input[type="text"] { padding: 12px; font-size: 1.3rem; text-align: center; border-radius: 5px; border: 2px solid var(--neon-cyan); background: #000; color: var(--neon-cyan);}
+        input[type="number"]:focus, input[type="text"]:focus { outline: none; box-shadow: var(--neon-cyan-glow); }
+        .autor-badge { background: var(--neon-magenta); color: #fff; padding: 5px 15px; border-radius: 15px; font-size: 0.9rem; display: inline-block; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;}
+        .alert-box { display: none; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: bold; text-align: center; border: 2px solid transparent;}
+        .alert-error { background: rgba(255, 51, 51, 0.1); border-color: #ff3333; color: #ff9e9e;}
+        .alert-success { background: rgba(57, 255, 20, 0.1); border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 20px rgba(57,255,20,0.2);}
+        .dificultad-indicator { color: #ccc; margin-top: 15px; font-size: 0.9rem; text-transform: uppercase;}
+        .attempts-badge { background: #000; border: 1px solid var(--neon-yellow); color: var(--neon-yellow); padding: 5px 15px; border-radius: 10px; font-size: 1rem; display: inline-block; margin-top: 10px;}
+
+        /* REPRODUTOR SPOTIFY */
+        .spotify-player { position: fixed; bottom: 20px; right: 20px; width: 320px; height: 80px; z-index: 1000; border-radius: 12px; box-shadow: 0 0 15px var(--neon-cyan); transition: transform 0.3s ease; }
+        .spotify-player:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--neon-cyan); }
+        @media (max-width: 600px) { .spotify-player { width: calc(100% - 40px); bottom: 10px; right: 20px; } }
+        
+        /* ANIMACIÓN FINAL BOSS */
+        @keyframes pulso { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        .btn-final-epic { background: var(--neon-yellow); color: #000; box-shadow: 0 0 30px var(--neon-yellow); font-size: 1.4rem; width: 100%; border-color: var(--neon-yellow); animation: pulso 1.5s infinite; padding: 20px; margin-top: 30px;}
+        .btn-final-epic:hover { background: #fff; color: #000; box-shadow: 0 0 40px #fff; animation: none; transform: scale(1.05);}
+    </style>
+</head>
+<body>
+
+<div class="spotify-player">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/77qHbQo41cp4kKAYeAHzBc?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+
+<div class="bg-globe-container">
+    <div class="bg-globe-map"></div>
+    <div class="bg-globe-colors"></div>
+    <div class="bg-pin-portas">
+        <div class="pin-icon"></div>
+        <div class="pin-label">PORTAS</div>
+    </div>
+</div>
+
+<div class="floating-decorations" id="decoraciones-flotantes"></div>
+
+<div class="container" id="intro-screen">
+    <h1>🎟️ VIP PASS: ALESS - 32 ANIVERSARIO 🎟️</h1>
+    <div class="intro-box">
+        <p>Benvido á túa <strong>Xira Mundial de Aniversario</strong>.</p>
+        <p>Hoxe vas ter que poñer a proba a túa memoria, a túa intuición e as túas dotes de orientación. Prepareiche un setlist con varias misións ocultas: poden ser recordos nosos, mensaxes de colegas ou lugares míticos.</p>
+        <p><strong>Regras do Festival:</strong></p>
+        <ul style="padding-left: 20px;">
+            <li>🎸 <strong>LIBERDADE TOTAL:</strong> Podes escoller a orde das pistas como queiras! Explora os Sub-escenarios dende o Escenario Principal ou dálle a Pista Aleatoria.</li>
+            <li>📍 Abre o link, <strong>xoga SÓ A ROLDA ACTUAL</strong> e mira a túa marxe de erro en metros. Podes pechar o mapa unha vez e introducir o dato onde se indique.</li>
+            <li>⏱️ <strong style="color: var(--neon-magenta); text-shadow: 0 0 5px var(--neon-magenta);">TEMPO LÍMITE:</strong> Observa ben que cada reto ten o seu propio tempo asignado. OLLO! Cando abras o mapa o reloxo comezará a correr. Se chega a cero, obrigarache a disparar a cegas!</li>
+            <li>⚠️ <strong>Se fallas os metros:</strong> A web comunicará o erro. Terás que volver ao GeoGuessr e darlle a "Xogar seguinte rolda" para volver tentalo. Tes 5 intentos por pista.</li>
+            <li>📅 Nalgunhas probas, ademais da ubicación, terás que adiviñar unha palabra ou a <strong>data exacta</strong> da lembranza.</li>
+        </ul>
+        <p>Estás listo para o show?</p>
+    </div>
+    <button class="btn btn-empezar" onclick="entrarHub()">ACCEDER AO BACKSTAGE 🎸</button>
+</div>
+
+<div class="container" id="hub-screen">
+    <button class="btn btn-back" style="font-size: 0.9rem; padding: 10px 15px;" onclick="volverIntro()">⬅️ INTRODUCIÓN</button>
+    
+    <h1>🎛️ ESCENARIO PRINCIPAL:<br>CARALLUDO 🎛️</h1>
+    
+    <div class="header-stats">
+        <div>Estado da Xira:</div>
+        <div class="progress-text"><span id="count-completadas" style="color:var(--neon-green);">0</span> / <span id="count-total">0</span> Superadas</div>
+    </div>
+
+    <div id="btn-final-container" style="display:none;">
+        <button class="btn btn-final-epic" onclick="abrirFinal()">🏆 DESBLOQUEAR AGASALLO FINAL 🏆</button>
+    </div>
+
+    <button class="btn-random" id="btn-random-game" onclick="misionAleatoria()">🎲 XOGAR PISTA ALEATORIA 🎲</button>
+
+    <h3>🎪 SUB-ESCENARIOS</h3>
+    <div class="categorias-grid" id="categorias-container"></div>
+
+    <h3>📋 TRACKS GLOBAIS DO FESTIVAL</h3>
+    <button class="list-btn completada" onclick="toggleList('list-completadas')">✅ SUPERADAS (<span id="num-completadas">0</span>) <span>▼</span></button>
+    <div class="list-content" id="list-completadas"></div>
+    <button class="list-btn pendiente" onclick="toggleList('list-pendientes')">⏳ EN PROCESO (<span id="num-pendientes">0</span>) <span>▼</span></button>
+    <div class="list-content" id="list-pendientes"></div>
+    <button class="list-btn sin_hacer" onclick="toggleList('list-sinhacer')">🎯 POR TOCAR (<span id="num-sinhacer">0</span>) <span>▼</span></button>
+    <div class="list-content" id="list-sinhacer"></div>
+
+    <div style="text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px dashed #555;">
+        <button class="btn btn-reset" onclick="resetearXogo()">⚠️ FORMAT SYSTEM (RESET GLOBAL)</button>
+    </div>
+</div>
+
+<div class="container" id="category-screen">
+    <button class="btn btn-back" onclick="volverDesdeCategoria()">⬅️ VOLVER AO ESCENARIO PRINCIPAL</button>
+    
+    <h1 id="cat-title-text" style="color: var(--neon-cyan); text-shadow: var(--neon-cyan-glow);">🎪 TITULO ESCENARIO</h1>
+    <p style="text-align:center; color: #ccc; margin-bottom: 30px;">Selecciona o reto que queres superar neste escenario:</p>
+
+    <div id="cat-misiones-container"></div>
+</div>
+
+<div class="container" id="game-screen">
+    <button class="btn btn-back btn-back-full" onclick="volverDesdeJuego()">⬅️ GARDAR E VOLVER Á LISTA</button>
+    <div id="game-content" style="text-align: center;"></div>
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px dashed #555;">
+        <button class="btn btn-reset" onclick="resetearMisionActual()">⚠️ RESETEAR TRACK ACTUAL</button>
+    </div>
+</div>
+
+<div class="container" id="final-screen" style="text-align: center;">
+    <h1 style="color: var(--neon-yellow); text-shadow: var(--neon-yellow-glow); font-size: 3.5rem; margin-bottom: 10px;">🏆 NORABOA! 🏆</h1>
+    <h3 style="color: var(--white); margin-bottom: 30px;">Completaches a Xira Mundial do teu 32 Aniversario</h3>
+    
+    <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un experto da xeografía festiva e sentimental.</p>
+    <p style="font-size: 1.2rem;">Pero agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
+    
+    <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 40px 20px; margin-top: 40px; border-radius: 15px; box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);">
+        <h2 style="color: var(--neon-green); margin-top: 0;">🎁 RECOMPENSA DESBLOQUEADA 🎁</h2>
+        <p style="font-size: 1.8rem; text-transform: uppercase; font-weight: bold; color: var(--white); margin: 20px 0; text-shadow: 0 0 10px var(--white);">1 Ano de GeoGuessr Élite</p>
+    </div>
+    
+    <button class="btn btn-empezar" style="margin-top: 40px; font-size: 1rem; padding: 10px 20px;" onclick="volverHub()">⬅️ VOLVER AO FESTIVAL</button>
+</div>
+
+<script src="misiones.js"></script>
+
+<script>
+    const PASS_RESET = "alba"; 
+    let estadoJuego = {};
+    const NOMBRES_NIVELES = ["DIFÍCIL 🔥", "MEDIO ⚖️", "FÁCIL 🟢"];
+    let idMisionActiva = null;
+    let categoriaActiva = ""; 
+
+    const TOTAL_IMAXES = 104; const IMAXES_SIMULTANEAS = 30; let rebotadores = [];
+    function iniciarRebotadores() {
+        const container = document.getElementById('decoraciones-flotantes');
+        for(let i=0; i<IMAXES_SIMULTANEAS; i++) crearRebotador(container);
+        requestAnimationFrame(actualizarRebotadores);
+    }
+    function crearRebotador(container, elementoExistente = null) {
+        let numImg = Math.floor(Math.random() * TOTAL_IMAXES) + 1;
+        let size = Math.floor(Math.random() * 50) + 60; 
+        let el = elementoExistente || document.createElement('div');
+        if(!elementoExistente) { el.className = 'floater-bounce'; container.appendChild(el); }
+        el.style.backgroundImage = `url('Imaxes/${numImg}.png')`; el.style.width = size + 'px'; el.style.height = size + 'px';
+        let x = Math.random() * (window.innerWidth - size); let y = Math.random() * (window.innerHeight - size);
+        let vx = (Math.random() - 0.5) * 1.5; let vy = (Math.random() - 0.5) * 1.5;
+        if(Math.abs(vx) < 0.3) vx = vx > 0 ? 0.3 : -0.3; if(Math.abs(vy) < 0.3) vy = vy > 0 ? 0.3 : -0.3;
+        let bouncer = { el: el, x: x, y: y, vx: vx, vy: vy, size: size, life: Math.floor(Math.random() * 600) + 300, fadingOut: false, opacity: 0 };
+        if(!elementoExistente) rebotadores.push(bouncer);
+        else { let idx = rebotadores.findIndex(f => f.el === elementoExistente); if(idx !== -1) rebotadores[idx] = bouncer; }
+    }
+    function actualizarRebotadores() {
+        let w = window.innerWidth; let h = window.innerHeight;
+        rebotadores.forEach(b => {
+            b.x += b.vx; b.y += b.vy;
+            if (b.x <= 0 || b.x + b.size >= w) b.vx *= -1;
+            if (b.y <= 0 || b.y + b.size >= h) b.vy *= -1;
+            b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
+            b.life--; if(b.life <= 0 && !b.fadingOut) b.fadingOut = true;
+            if(b.fadingOut) { b.opacity -= 0.01; if(b.opacity <= 0) crearRebotador(null, b.el); } else { if(b.opacity < 0.7) b.opacity += 0.01; }
+            b.el.style.opacity = b.opacity;
+        });
+        requestAnimationFrame(actualizarRebotadores);
+    }
+
+    window.onload = () => { cargarGuardado(); renderHub(); iniciarRebotadores(); };
+
+    function cargarGuardado() {
+        let guardado = localStorage.getItem('geoCumpleAless');
+        if (guardado) estadoJuego = JSON.parse(guardado);
+        else { misionesData.forEach(m => { estadoJuego[m.id] = { estado: "sin_hacer", dificultad: 0, intentos: 0, ubicacionOk: false }; }); guardarProgreso(); }
+        misionesData.forEach(m => {
+            if(!estadoJuego[m.id]) estadoJuego[m.id] = { estado: "sin_hacer", dificultad: 0, intentos: 0, ubicacionOk: false };
+            else { if (typeof estadoJuego[m.id].intentos === 'undefined') estadoJuego[m.id].intentos = 0; if (typeof estadoJuego[m.id].ubicacionOk === 'undefined') estadoJuego[m.id].ubicacionOk = false; }
+        });
+        guardarProgreso();
+    }
+
+    function guardarProgreso() { localStorage.setItem('geoCumpleAless', JSON.stringify(estadoJuego)); }
+
+    function ocultarTodo() {
+        document.getElementById('intro-screen').style.display = "none";
+        document.getElementById('hub-screen').style.display = "none";
+        document.getElementById('category-screen').style.display = "none";
+        document.getElementById('game-screen').style.display = "none";
+        document.getElementById('final-screen').style.display = "none";
+    }
+
+    function entrarHub() { ocultarTodo(); renderHub(); document.getElementById('hub-screen').style.display = "block"; categoriaActiva = ""; }
+    function volverIntro() { ocultarTodo(); document.getElementById('intro-screen').style.display = "block"; }
+    function volverDesdeCategoria() { entrarHub(); }
+    function volverDesdeJuego() { ocultarTodo(); if (categoriaActiva !== "") { abrirCategoria(categoriaActiva); } else { entrarHub(); } }
+    function abrirFinal() { ocultarTodo(); document.getElementById('final-screen').style.display = "block"; }
+
+    function getCategoryStyle(cat) {
+        if (cat.includes("ESCONDITE")) return { icon: "🙈", img: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=500&q=80" };
+        if (cat.includes("VOLTIO")) return { icon: "🏍️", img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=500&q=80" };
+        if (cat.includes("CAMIÑAR")) return { icon: "👟", img: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=500&q=80" };
+        return { icon: "🎪", img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=500&q=80" };
+    }
+
+    function renderHub() {
+        let completadasG = misionesData.filter(m => estadoJuego[m.id].estado === "completada");
+        document.getElementById('count-total').innerText = misionesData.length;
+        document.getElementById('count-completadas').innerText = completadasG.length;
+        
+        let pendientes = misionesData.filter(m => estadoJuego[m.id].estado === "pendiente");
+        let sinHacer = misionesData.filter(m => estadoJuego[m.id].estado === "sin_hacer");
+
+        document.getElementById('num-completadas').innerText = completadasG.length;
+        document.getElementById('num-pendientes').innerText = pendientes.length;
+        document.getElementById('num-sinhacer').innerText = sinHacer.length;
+
+        // ACTIVAR BOTÓN FINAL CANDO SUPERE AS 27
+        if (completadasG.length === misionesData.length && misionesData.length > 0) {
+            document.getElementById('btn-final-container').style.display = "block";
+            document.getElementById('btn-random-game').style.display = "none";
+        } else {
+            document.getElementById('btn-final-container').style.display = "none";
+            document.getElementById('btn-random-game').style.display = "flex";
+        }
+
+        let categoriasUnicas = [...new Set(misionesData.map(m => m.categoria))];
+        let catHtml = '';
+
+        categoriasUnicas.forEach(cat => {
+            let s = getCategoryStyle(cat); let tituloCurto = cat;
+            if(cat.includes("ESCONDITE")) tituloCurto = "ESCONDITE INGLÉS";
+            catHtml += `<div class="cat-card" onclick="abrirCategoria('${cat}')"><div class="cat-bg" style="background-image:url('${s.img}')"></div><div class="cat-content"><span class="cat-icon">${s.icon}</span><span class="cat-title">${tituloCurto}</span></div></div>`;
+        });
+        document.getElementById('categorias-container').innerHTML = catHtml;
+
+        renderListGlobal('list-completadas', completadasG, "Revisar"); renderListGlobal('list-pendientes', pendientes, "Continuar"); renderListGlobal('list-sinhacer', sinHacer, "Tocar");
+    }
+
+    function renderListGlobal(containerId, misionesArr, textBtn) {
+        let html = "";
+        if(misionesArr.length === 0) html = "<p style='color:#777; text-align:center; padding:10px;'>Sen pistas nesta sección.</p>";
+        misionesArr.forEach(m => { html += `<div class="list-item"><div><strong style="color:var(--neon-cyan);">${m.titulo}</strong><br><small style="color:#aaa;">Voces: <span style="color:var(--neon-yellow);">${m.autor}</span></small></div><button class="btn btn-play" onclick="abrirMision('${m.id}')">${textBtn} ▶️</button></div>`; });
+        document.getElementById(containerId).innerHTML = html;
+    }
+
+    function toggleList(id) { let el = document.getElementById(id); el.style.display = (el.style.display === "block") ? "none" : "block"; }
+
+    function abrirCategoria(cat) {
+        categoriaActiva = cat; ocultarTodo(); document.getElementById('category-screen').style.display = "block";
+        let tituloCurto = cat.includes("ESCONDITE") ? "ESCONDITE INGLÉS" : cat; let styleInfo = getCategoryStyle(cat);
+        document.getElementById('cat-title-text').innerHTML = `${styleInfo.icon} ${tituloCurto}`;
+        let catMissions = misionesData.filter(m => m.categoria === cat); let html = "";
+        catMissions.forEach(m => {
+            let est = estadoJuego[m.id].estado;
+            let color = est === 'completada' ? 'var(--neon-green)' : (est === 'pendiente' ? 'var(--neon-yellow)' : 'var(--neon-cyan)');
+            let icon = est === 'completada' ? '✅' : (est === 'pendiente' ? '⏳' : '🎯');
+            let txtBtn = est === 'completada' ? 'REVISAR' : (est === 'pendiente' ? 'CONTINUAR' : 'TOCAR');
+            html += `<div class="list-item" style="border-left: 6px solid ${color}; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 15px;"><div><strong style="color:${color}; font-size: 1.1rem;">${icon} ${m.titulo}</strong><br><small style="color:#bbb;">Voces: <span style="color:var(--white);">${m.autor}</span></small></div><button class="btn btn-play" style="border-color:${color}; color:${color};" onclick="abrirMision('${m.id}')">${txtBtn} ▶️</button></div>`;
+        });
+        document.getElementById('cat-misiones-container').innerHTML = html;
+    }
+
+    function misionAleatoria() {
+        let disponibles = misionesData.filter(m => estadoJuego[m.id].estado !== "completada");
+        if(disponibles.length === 0) return;
+        let randomMision = disponibles[Math.floor(Math.random() * disponibles.length)];
+        categoriaActiva = ""; abrirMision(randomMision.id);
+    }
+
+    function abrirMision(id) {
+        idMisionActiva = id; let m = misionesData.find(x => x.id === id); let est = estadoJuego[id];
+        if (est.estado === "sin_hacer") { est.estado = "pendiente"; guardarProgreso(); }
+        ocultarTodo(); document.getElementById('game-screen').style.display = "block";
+
+        let mediaHTML = "";
+        if(m.tipoMedia === "imagen") mediaHTML = `<img src="${m.archivoMedia}">`;
+        if(m.tipoMedia === "video") mediaHTML = `<video controls><source src="${m.archivoMedia}"></video>`;
+        if(m.tipoMedia === "audio") mediaHTML = `<audio controls><source src="${m.archivoMedia}"></audio>`;
+
+        let controlIntentos = "";
+        if (est.estado === "completada") {
+            controlIntentos = `<div class="alert-box alert-success" style="display:block;">🎉 <b>TRACK SUPERADO!</b><br>Xa conseguiches o teu agasallo:<br><span style="color:var(--neon-cyan); text-transform:uppercase; font-size:1.2rem;">${m.regalo}</span>${m.textoPostAcerto ? `<div style="margin: 15px 0; color: #fff; font-weight: normal; font-size: 1rem; border-left: 3px solid var(--neon-cyan); padding-left: 10px; text-align: left;"><i>${m.textoPostAcerto}</i></div>` : ""}</div>`;
+        } else if (est.intentos >= 5) {
+            controlIntentos = `<div class="alert-box alert-error" style="display:block;">🚫 <b>OPORTUNIDADES ESGOTADAS!</b><br>Fallaches as 5 roldas. Pídelle a Alba que che reinicie este track dende as opcións.</div>`;
+        } else {
+            let isFechaPhase = (m.requiereFecha && est.ubicacionOk); let isTexto = m.tipoRespuesta === "texto";
+            let promptPregunta = isFechaPhase ? "📍 Ubicación correcta! Pero... <b>en que DATA foi?</b>" : isTexto ? "Cal é a túa resposta?" : `A cantos <b>metros</b> quedaches na Rolda ${est.intentos + 1}?`;
+            let inputType = (isTexto || isFechaPhase) ? "text" : "number";
+            let inputStyle = (isTexto || isFechaPhase) ? "width: 250px;" : "width: 120px;";
+            let divMarxe = (!isFechaPhase && !isTexto) ? `<div class="dificultad-indicator" id="info-nivel">Nivel actual: ${NOMBRES_NIVELES[est.dificultad]} (Marxe permitida: ${obtenerMargen(m, est.dificultad)}m)</div>` : "";
+
+            controlIntentos = `<div class="input-box"><p>${promptPregunta}</p><input type="${inputType}" id="distancia-input" placeholder="${(isTexto || isFechaPhase) ? 'Escribe aquí...' : '0'}" style="${inputStyle}"><br><br><button class="btn" onclick="comprobarRespuesta()" style="border-color:var(--neon-green); color:var(--neon-green);">COMPROBAR RESPOSTA</button>${divMarxe}<div class="attempts-badge" id="badge-intentos">Intentos gastados: ${est.intentos} / 5</div></div><div id="alerta-juego" class="alert-box"></div>`;
+        }
+
+        let botonGeoguessrHTML = "";
+        let isFechaPhaseBoton = (m.requiereFecha && est.ubicacionOk);
+        if (!isFechaPhaseBoton && m.linkGeoguessr && m.linkGeoguessr !== "") {
+            let avisoTempoHTML = "";
+            if (m.tiempo && m.tiempo !== "") { avisoTempoHTML = `<div style="color: var(--neon-magenta); margin-bottom: 15px; font-weight: bold; font-size: 1.1rem; text-transform: uppercase; text-shadow: 0 0 5px var(--neon-magenta);">⏱️ TEMPO LÍMITE: ${m.tiempo} por rolda!</div>`; }
+            botonGeoguessrHTML = `${avisoTempoHTML}<a href="${m.linkGeoguessr}" target="_blank" class="btn btn-maps">📍 ABRIR GEOGUESSR E BUSCAR 📍</a>`;
+        }
+
+        let tituloCurto = m.categoria; if (tituloCurto && tituloCurto.includes("ESCONDITE")) tituloCurto = "ESCONDITE INGLÉS";
+        document.getElementById('game-content').innerHTML = `<div class="autor-badge">🎤 Voces: ${m.autor} | 🎪 Escenario: ${tituloCurto}</div><h2>${m.titulo}</h2><div class="media-box"><p style="font-size: 1.1rem; line-height: 1.6;">${m.texto}</p>${mediaHTML}</div>${botonGeoguessrHTML}${controlIntentos}`;
+    }
+
+    function obtenerMargen(mision, nivel) { return nivel === 0 ? mision.dificil : nivel === 1 ? mision.medio : mision.facil; }
+    function quitarAcentos(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+
+    function comprobarRespuesta() {
+        let inputEl = document.getElementById('distancia-input'); if (inputEl.value.trim() === "") return;
+        let m = misionesData.find(x => x.id === idMisionActiva); let est = estadoJuego[idMisionActiva];
+        let alerta = document.getElementById('alerta-juego'); alerta.style.display = "block";
+        let acerto = false; let isFechaPhase = (m.requiereFecha && est.ubicacionOk); let isTexto = m.tipoRespuesta === "texto";
+
+        if (isFechaPhase) { if (quitarAcentos(inputEl.value.trim().toLowerCase()) === quitarAcentos(m.fechaCorrecta.trim().toLowerCase())) acerto = true; } 
+        else if (isTexto) { if (quitarAcentos(inputEl.value.trim().toLowerCase()) === quitarAcentos(m.respuestaCorrecta.trim().toLowerCase())) acerto = true; } 
+        else { if (parseFloat(inputEl.value) <= obtenerMargen(m, est.dificultad)) acerto = true; }
+
+        est.intentos++; guardarProgreso(); document.getElementById('badge-intentos').innerText = `Intentos gastados: ${est.intentos} / 5`;
+
+        if (acerto) {
+            if (!isFechaPhase && m.requiereFecha) {
+                est.ubicacionOk = true; guardarProgreso(); alerta.className = "alert-box alert-success";
+                alerta.innerHTML = `📍 <b>BRUTAL! Ubicación superada.</b> Agora imos coa data...`; setTimeout(() => { abrirMision(idMisionActiva); }, 2000);
+            } else {
+                est.estado = "completada"; guardarProgreso(); alerta.className = "alert-box alert-success";
+                alerta.innerHTML = `🎸 <b>BRUTAL! ACERTACHES!</b> 🎸<br>Agasallo desbloqueado: <br><span style="color:var(--white); text-transform:uppercase; font-size:1.3rem;">${m.regalo}</span>${m.textoPostAcerto ? `<div style="margin: 15px 0; color: #fff; font-weight: normal; font-size: 1rem; border-left: 3px solid var(--neon-cyan); padding-left: 10px; text-align: left;"><i>${m.textoPostAcerto}</i></div>` : ""}`;
+                document.querySelector('.input-box').style.display = "none"; 
+            }
+        } else {
+            alerta.className = "alert-box alert-error"; inputEl.value = "";
+            if (est.intentos >= 5) { alerta.innerHTML = `❌ <b>GAME OVER: Gastaches os 5 intentos!</b><br>Bloqueando pista...`; setTimeout(() => { abrirMision(idMisionActiva); }, 2000); } 
+            else if (isFechaPhase) { alerta.innerHTML = `❌ Fallaches a data! Pensa ben, quédanche ${5 - est.intentos} intentos.`; } 
+            else if (isTexto) { alerta.innerHTML = `❌ Fallaches, esa non é a resposta correcta! Quédanche ${5 - est.intentos} intentos.`; } 
+            else {
+                let msgError = `❌ Demasiado lonxe! Toca xogar a <b>ROLDA ${est.intentos + 1}</b> no GeoGuessr.<br><br>Podes manter a dificultade ou baixala se te ves moi apurado:<br><br>`;
+                if (est.dificultad === 0) msgError += `<button class='btn btn-back' style='margin:0; border-color:var(--neon-yellow); color:var(--neon-yellow); font-size:0.9rem;' onclick='bajarDificultad(1)'>Baixar a nivel Medio (Marxe permitida: ${m.medio}m)</button>`;
+                else if (est.dificultad === 1) msgError += `<button class='btn btn-back' style='margin:0; border-color:var(--neon-yellow); color:var(--neon-yellow); font-size:0.9rem;' onclick='bajarDificultad(2)'>Baixar a nivel Fácil (Marxe permitida: ${m.facil}m)</button>`;
+                else msgError = `❌ Fallaches! Xa estás no nivel máis fácil. Toca xogar a <b>ROLDA ${est.intentos + 1}</b> no GeoGuessr e afinar mellor a puntería. Quédanche ${5 - est.intentos} intentos.`;
+                alerta.innerHTML = msgError;
+            }
+        }
+    }
+
+    function bajarDificultad(nuevoNivel) {
+        let m = misionesData.find(x => x.id === idMisionActiva); estadoJuego[idMisionActiva].dificultad = nuevoNivel; guardarProgreso();
+        document.querySelector('.input-box p').innerHTML = `A cantos <b>metros</b> quedaches na Rolda ${estadoJuego[idMisionActiva].intentos + 1}?`;
+        document.getElementById('info-nivel').innerText = `Nivel actual: ${NOMBRES_NIVELES[nuevoNivel]} (Marxe permitida: ${obtenerMargen(m, nuevoNivel)}m)`; document.getElementById('alerta-juego').style.display = "none";
+    }
+
+    function resetearXogo() { if (prompt("⚠️ ZONA VIP DE ACCESO RESTRINXIDO ⚠️\nIntroduce o contrasinal para formatear todo o progreso:") === PASS_RESET) { localStorage.removeItem('geoCumpleAless'); alert("Sistema formateado correctamente. Reiniciando..."); window.location.reload(); } else { alert("❌ Contrasinal incorrecto."); } }
+    function resetearMisionActual() { if (!idMisionActiva) return; if (prompt("⚠️ ZONA VIP DE ACCESO RESTRINXIDO ⚠️\nIntroduce o contrasinal para reiniciar ESTA pista en concreto:") === PASS_RESET) { estadoJuego[idMisionActiva] = { estado: "sin_hacer", dificultad: 0, intentos: 0, ubicacionOk: false }; guardarProgreso(); alert("Pista reiniciada con éxito."); abrirMision(idMisionActiva); } else { alert("❌ Contrasinal incorrecto."); } }
+</script>
+
+</body>
+</html>

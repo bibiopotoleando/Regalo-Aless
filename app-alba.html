@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario VIP de Regalos - Alba</title>
+    <style>
+        body {
+            background-color: #111; color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0; padding: 20px; text-align: center;
+        }
+        h1 { color: #ff007f; text-shadow: 0 0 10px #ff007f; text-transform: uppercase; font-size: 1.8rem; margin-bottom: 5px; }
+        p.subtitle { color: #ccc; margin-bottom: 25px; font-size: 0.9rem; }
+        
+        .list-container {
+            max-width: 500px; margin: 0 auto; text-align: left;
+        }
+        
+        .gift-item {
+            background: #222; border-left: 5px solid #66fcf1;
+            margin-bottom: 10px; padding: 15px; border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+        
+        .gift-item.entregado {
+            border-left-color: #39ff14;
+            background: rgba(57, 255, 20, 0.1);
+            opacity: 0.6;
+        }
+        
+        .gift-info strong { color: #66fcf1; font-size: 1.1rem; }
+        .gift-item.entregado .gift-info strong { color: #39ff14; text-decoration: line-through; }
+        .gift-info div { color: #ddd; font-size: 0.9rem; margin-top: 5px; }
+        
+        .check-btn {
+            background: transparent; border: 2px solid #66fcf1; color: #66fcf1;
+            width: 40px; height: 40px; border-radius: 50%;
+            font-size: 1.2rem; display: flex; justify-content: center; align-items: center;
+            cursor: pointer;
+        }
+        .gift-item.entregado .check-btn {
+            background: #39ff14; border-color: #39ff14; color: #000;
+        }
+
+        .btn-reset {
+            background: transparent; color: #ff3333; border: 2px solid #ff3333;
+            padding: 15px; width: 100%; font-size: 1.1rem; border-radius: 8px;
+            margin-top: 30px; font-weight: bold; cursor: pointer; text-transform: uppercase;
+        }
+        
+        .boss-gift {
+            border: 2px dashed #ffe600; background: rgba(255, 230, 0, 0.1);
+            border-left: none; margin-top: 25px;
+        }
+        .boss-gift .gift-info strong { color: #ffe600; }
+        .boss-gift .check-btn { border-color: #ffe600; color: #ffe600; }
+        .boss-gift.entregado { border-color: #39ff14; background: rgba(57, 255, 20, 0.2); }
+        
+    </style>
+</head>
+<body>
+
+    <h1>📝 Check-List VIP</h1>
+    <p class="subtitle">Control de inventario de agasallos</p>
+
+    <div class="list-container" id="regalos-lista">
+        </div>
+
+    <div class="list-container">
+        <button class="btn-reset" onclick="resetApp()">⚠️ Limpar e Empezar de Cero</button>
+    </div>
+
+    <script>
+        const listaRegalos = [
+            { id: 1, m: "M1", nome: "ALBA", agasallo: "Piruleta ¡Felicidades!" },
+            { id: 2, m: "M2", nome: "HARIS", agasallo: "Milkwaffer + Kit-Kat" },
+            { id: 3, m: "M3", nome: "BORJA", agasallo: "Camiseta SOAD" },
+            { id: 4, m: "M4", nome: "MELLA", agasallo: "Bono bicos" },
+            { id: 5, m: "M5", nome: "MARCOS", agasallo: "Bono regalo youtube" },
+            { id: 6, m: "M6", nome: "CLARA", agasallo: "Huevo Kinder" },
+            { id: 7, m: "M7", nome: "GERMÁN", agasallo: "Trípode" },
+            { id: 8, m: "M8", nome: "LAURA", agasallo: "Pedras chocolate" },
+            { id: 9, m: "M9", nome: "ABEL", agasallo: "HARIBO I" },
+            { id: 10, m: "M10", nome: "JULI", agasallo: "Kinder bueno" },
+            { id: 11, m: "M11", nome: "IVÁN", agasallo: "Video roda Aless" },
+            { id: 12, m: "M12", nome: "DIANA", agasallo: "Pack cervexa 1" },
+            { id: 13, m: "M13", nome: "PIKI", agasallo: "Lacasitos + Biscoff + Toblerone" },
+            { id: 14, m: "M14", nome: "ÁXEL", agasallo: "Camiseta Linkin' Park" },
+            { id: 15, m: "M15", nome: "SÁMER", agasallo: "HARIBO II" },
+            { id: 16, m: "M16", nome: "EVA", agasallo: "Bombóns" },
+            { id: 17, m: "M17", nome: "REBECA", agasallo: "Bono masaxe" },
+            { id: 18, m: "M18", nome: "RICHI", agasallo: "HARIBO III" },
+            { id: 19, m: "M19", nome: "LAURECHA", agasallo: "Afeitadora" },
+            { id: 20, m: "M20", nome: "DARÍO", agasallo: "Bono restaurante" },
+            { id: 21, m: "M21", nome: "PABLO C", agasallo: "HARIBO IV" },
+            { id: 22, m: "M22", nome: "ESTELA", agasallo: "Bono visita Nordés" },
+            { id: 23, m: "M23", nome: "LUIS", agasallo: "Vinilo SOAD" },
+            { id: 24, m: "M24", nome: "DAMIÁN", agasallo: "Velas chocolate" },
+            { id: 25, m: "M25", nome: "PABLO G", agasallo: "Pack cervexa 2" },
+            { id: 26, m: "M26", nome: "JAVI", agasallo: "HARIBO V" },
+            { id: 27, m: "M27", nome: "COMESAÑA", agasallo: "Bono mochila" },
+            { id: "FINAL", m: "FINAL", nome: "O GRAN FINAL", agasallo: "Bono Geoguessr" }
+        ];
+
+        let estadoEntregas = JSON.parse(localStorage.getItem('albaRegalos')) || {};
+
+        function debuxarLista() {
+            let html = "";
+            listaRegalos.forEach(item => {
+                let isEntregado = estadoEntregas[item.id] ? "entregado" : "";
+                let iconBtn = estadoEntregas[item.id] ? "✓" : "";
+                let extraClass = item.id === "FINAL" ? "boss-gift" : "";
+                
+                html += `
+                <div class="gift-item ${isEntregado} ${extraClass}" onclick="toggleEntrega('${item.id}')">
+                    <div class="gift-info">
+                        <strong>${item.id === "FINAL" ? "🌟" : item.id + "."} ${item.nome}</strong>
+                        <div>🎁 ${item.agasallo}</div>
+                    </div>
+                    <button class="check-btn">${iconBtn}</button>
+                </div>
+                `;
+            });
+            document.getElementById('regalos-lista').innerHTML = html;
+        }
+
+        function toggleEntrega(id) {
+            estadoEntregas[id] = !estadoEntregas[id];
+            localStorage.setItem('albaRegalos', JSON.stringify(estadoEntregas));
+            debuxarLista();
+        }
+
+        function resetApp() {
+            if(confirm("Seguro que queres borrar todo o progreso da lista?")) {
+                localStorage.removeItem('albaRegalos');
+                estadoEntregas = {};
+                debuxarLista();
+            }
+        }
+
+        window.onload = debuxarLista;
+    </script>
+</body>
+</html>

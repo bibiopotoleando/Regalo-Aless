@@ -20,7 +20,7 @@ const misionesData = [
         titulo: "Auga cae!",
         texto: "Estivemos xuntos.",
         tipoMedia: "video",
-        archivoMedia: "Imaxes/M2.mp4",
+        archivoMedia: "imaxes/M2.mp4",
         linkGeoguessr: "https://www.geoguessr.com/challenge/I712jxQda7TgsK2N",
         dificil: 20, medio: 500, facil: 1500,
         tiempo: "3 mins",
@@ -34,7 +34,7 @@ const misionesData = [
         titulo: "OVNI",
         texto: "Escoita con atención:",
         tipoMedia: "audio",
-        archivoMedia: "Imaxes/M3.ogg",
+        archivoMedia: "imaxes/M3.ogg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/2uVLPHdFscSlzUwC",
         dificil: 100, medio: 500, facil: 1500,
         tiempo: "5 min 50 seg",
@@ -48,13 +48,13 @@ const misionesData = [
         titulo: "Pasado por auga",
         texto: "Veña, poñamos a proba a tua memoria! Onde fixemos esta fotiño?",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M4.jpeg",
+        archivoMedia: "imaxes/M4.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/4uWui72TORmNMedo",
         dificil: 50, medio: 200, facil: 500,
         tiempo: "3 mins 50 seg",
         requiereFecha: true,
         fechaCorrecta: "15 de agosto",
-        regalo: "<br><img src='Imaxes/R4.png' style='max-width:100%; border-radius:8px;'>",
+        regalo: "<br><img src='imaxes/R4.png' style='max-width:100%; border-radius:8px;'>",
         textoPostAcerto: "Porque, que mellor regalo para facerche, que recordar unha das primeiras fotos que temos xuntos? Unha das miñas favs, porque solo con mirarnos, e ver o felices que éramos xuntos, se pode imaxinar unha pequena pequena parte do grande e valiosa que é a nosa amizade ❤️❤️❤️❤️"
     },
     {
@@ -68,8 +68,8 @@ const misionesData = [
         linkGeoguessr: "https://www.geoguessr.com/challenge/GHpQRsKLECI3x1HI",
         dificil: 50, medio: 200, facil: 500,
         tiempo: "2 mins 30 seg",
-        regalo: "<br><img src='Imaxes/R5.png' style='max-width:100%; border-radius:8px;'>",
-        textoPostAcerto: "<br><br><b>Mensaxe Extra de Marcos:</b><br><audio controls style='width:100%'><source src='Imaxes/M5.ogg'></audio>"
+        regalo: "<br><img src='imaxes/R5.png' style='max-width:100%; border-radius:8px;'>",
+        textoPostAcerto: "<br><br><b>Mensaxe Extra de Marcos:</b><br><audio controls style='width:100%'><source src='imaxes/M5.ogg'></audio>"
     },
     {
         id: "M6",
@@ -92,7 +92,7 @@ const misionesData = [
         titulo: "El emperador",
         texto: "Bota un ollo á imaxe...",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M7.jpeg",
+        archivoMedia: "imaxes/M7.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/uqeHNBPJtMr4K8t7",
         dificil: 100, medio: 500, facil: 1500,
         tiempo: "7 mins",
@@ -127,7 +127,7 @@ const misionesData = [
         dificil: 20, medio: 100, facil: 500,
         tiempo: "3 mins",
         regalo: "Pregúntalle a Alba",
-        textoPostAcerto: "<br><img src='Imaxes/M9.jpeg' style='max-width:100%; border-radius:8px; margin-top:10px;'>"
+        textoPostAcerto: "<br><img src='imaxes/M9.jpeg' style='max-width:100%; border-radius:8px; margin-top:10px;'>"
     },
     {
         id: "M10",
@@ -136,7 +136,7 @@ const misionesData = [
         titulo: "Sinistro",
         texto: "A pregunta seria.. en que concello se produciu o sinistro?",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M10.jpeg",
+        archivoMedia: "imaxes/M10.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/86TFCT8yDomS6xvU",
         dificil: 100, medio: 1000, facil: 2500,
         tiempo: "9 mins",
@@ -148,13 +148,13 @@ const misionesData = [
         categoria: "ESCONDITE INGLÉS (sen mover as mans nin os pés)",
         autor: "IVÁN",
         titulo: "CHO-CHO-CHÓFER PARE EL TAXI",
-        texto: "Bota un ollo ao vídeo! E por se non o escoitas ben, aquí tes a proba de audio:<br><audio controls style='width:100%; margin-top:10px;'><source src='Imaxes/M11.2.mp3'></audio>",
+        texto: "Bota un ollo ao vídeo! E por se non o escoitas ben, aquí tes a proba de audio:<br><audio controls style='width:100%; margin-top:10px;'><source src='imaxes/M11.2.mp3'></audio>",
         tipoMedia: "video",
-        archivoMedia: "Imaxes/M11.mp4",
+        archivoMedia: "imaxes/M11.mp4",
         linkGeoguessr: "https://www.geoguessr.com/challenge/oJlgj8xUnuzRdDmk",
         dificil: 50, medio: 100, facil: 500,
         tiempo: "1 min 30 seg",
-        regalo: "<br><video controls style='max-width:100%; border-radius:8px;'><source src='Imaxes/R11.mp4'></video>",
+        regalo: "<br><video controls style='max-width:100%; border-radius:8px;'><source src='imaxes/R11.mp4'></video>",
         textoPostAcerto: "<br><iframe width='100%' height='250' src='https://www.youtube.com/embed/qRp3-D3SMwI' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen style='border-radius:8px; margin-top:10px;'></iframe>"
     },
     {
@@ -187,12 +187,12 @@ const misionesData = [
     },
     {
         id: "M14",
-        categoria: "ESCONDITE INGLÉS (sen mover as mans nin os pés)",
+        categoria: "ESCONDITE INGLES (sen mover as mans nin os pés)",
         autor: "ÁXEL",
         titulo: "Yo sé lo que cobra la cajeta del Froiz porque se lo pregunté",
         texto: "Dando una vuelta con unos amigos, me encontré con Alba y contigo. Fuimos a tomar algo a este sitio y se nos unió alguien más. Tras varias cervezas, como si del programa de Broncano se tratase, se acabó hablando de dinero. También de ciertas figuras que se venden baratas para la gran calidad que tienen. Fue una pena que ninguno de los allí presentes fuese especialmente aficionado a ellas.",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M14.jpeg",
+        archivoMedia: "imaxes/M14.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/lo1xL8PUHaLExJtd",
         dificil: 20, medio: 50, facil: 150,
         tiempo: "1 min 50 seg",
@@ -206,7 +206,7 @@ const misionesData = [
         titulo: "Ola Alba! Momento/Pregunta/Como sexa para Aless",
         texto: "Despois de tirar esta foto fumos repostar os depósitos das motos e máis os nosos. Acabamos nun sitio aleatorio que che pareceu ver pasando ca moto. Tremendos chuletóns nos metimos. Acordas onde foi?",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M15.jpeg",
+        archivoMedia: "imaxes/M15.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/TlQS6wucjQjZh79X",
         dificil: 50, medio: 300, facil: 850,
         tiempo: "3 mins",
@@ -220,12 +220,12 @@ const misionesData = [
         titulo: "Mamá",
         texto: "estoy estudiando",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M16.jpeg",
+        archivoMedia: "imaxes/M16.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/tf2PYjUGcTUbyl9K",
         dificil: 20, medio: 50, facil: 150,
         tiempo: "3 mins",
         regalo: "Pregúntalle a Alba",
-        textoPostAcerto: "No me acuerda en qué discoteca fuera… en alguna del Arenal 🤣 <br><img src='Imaxes/M16.2.jpeg' style='max-width:100%; border-radius:8px; margin-top:10px;'>"
+        textoPostAcerto: "No me acuerda en qué discoteca fuera… en alguna del Arenal 🤣 <br><img src='imaxes/M16.2.jpeg' style='max-width:100%; border-radius:8px; margin-top:10px;'>"
     },
     {
         id: "M17",
@@ -238,7 +238,7 @@ const misionesData = [
         linkGeoguessr: "https://www.geoguessr.com/challenge/auDIHCCS45jSQ2HX",
         dificil: 100, medio: 800, facil: 2500,
         tiempo: "7 mins",
-        regalo: "<br><img src='Imaxes/R17.png' style='max-width:100%; border-radius:8px;'>",
+        regalo: "<br><img src='imaxes/R17.png' style='max-width:100%; border-radius:8px;'>",
         textoPostAcerto: "Os dous estivemos viciadisimos a Castle, serie que comentábamos cando cuadrábamos. Aless, por un amigo invisible, regaloume o libro de Ola de Calor."
     },
     {
@@ -262,7 +262,7 @@ const misionesData = [
         titulo: "Un vermucito",
         texto: "Onde foi sacada esta foto",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M19.jpeg",
+        archivoMedia: "imaxes/M19.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/aV0V60lgBff2CHCG",
         dificil: 30, medio: 50, facil: 100,
         tiempo: "2 min",
@@ -276,13 +276,13 @@ const misionesData = [
         titulo: "Unha Banda",
         texto: "Onde foi sacada a foto?",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M20.jpeg",
+        archivoMedia: "imaxes/M20.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/Hi9OenhMvnR4Gb9p",
         dificil: 20, medio: 50, facil: 100,
         tiempo: "2 mins",
         requiereFecha: true,
         fechaCorrecta: "26 de xuño de 2025",
-        regalo: "<br><img src='Imaxes/R20.png' style='max-width:100%; border-radius:8px;'>",
+        regalo: "<br><img src='imaxes/R20.png' style='max-width:100%; border-radius:8px;'>",
         textoPostAcerto: ""
     },
     {
@@ -310,7 +310,7 @@ const misionesData = [
         linkGeoguessr: "https://www.geoguessr.com/challenge/vthw2y6BircuEuCD",
         dificil: 20, medio: 40, facil: 60,
         tiempo: "1 min 20 seg",
-        regalo: "<br><img src='Imaxes/R22.png' style='max-width:100%; border-radius:8px;'>",
+        regalo: "<br><img src='imaxes/R22.png' style='max-width:100%; border-radius:8px;'>",
         textoPostAcerto: ""
     },
     {
@@ -334,7 +334,7 @@ const misionesData = [
         titulo: "Festas",
         texto: "Fue un día que un amigo nuestro decidió que tenía calor y se quitó la camisa en pleno noviembre",
         tipoMedia: "video",
-        archivoMedia: "Imaxes/M24.mp4",
+        archivoMedia: "imaxes/M24.mp4",
         linkGeoguessr: "https://www.geoguessr.com/challenge/xuTBzphcEyZT8CQh",
         dificil: 50, medio: 150, facil: 500,
         tiempo: "2 mins 30 seg",
@@ -348,7 +348,7 @@ const misionesData = [
         titulo: "Go danzar",
         texto: "Pregunta: Obviamente a miña pregunta é unha festa, pero dónde estabamos aquí?",
         tipoMedia: "imagen",
-        archivoMedia: "Imaxes/M25.jpeg",
+        archivoMedia: "imaxes/M25.jpeg",
         linkGeoguessr: "https://www.geoguessr.com/challenge/rNzhg4dfbVYYrTTt",
         dificil: 20, medio: 100, facil: 250,
         tiempo: "1 min 30 seg",
@@ -364,14 +364,14 @@ const misionesData = [
         titulo: "Antes de todo",
         texto: "Bota un ollo ao vídeo:",
         tipoMedia: "video",
-        archivoMedia: "Imaxes/M26.mp4",
+        archivoMedia: "imaxes/M26.mp4",
         linkGeoguessr: "https://www.geoguessr.com/challenge/ZkH8NSGLshwWxWoQ",
         dificil: 30, medio: 100, facil: 200,
         tiempo: "3 min",
         requiereFecha: true,
         fechaCorrecta: "9 de xullo de 2016",
-        regalo: "<br><img src='Imaxes/R26.png' style='max-width:100%; border-radius:8px;'>",
-        textoPostAcerto: "O que mais gracia me fixo foi este video de antes de conocelo. <br><img src='Imaxes/M26.png' style='max-width:100%; border-radius:8px; margin-top:10px;'>"
+        regalo: "<br><img src='imaxes/R26.png' style='max-width:100%; border-radius:8px;'>",
+        textoPostAcerto: "O que mais gracia me fixo foi este video de antes de conocelo. <br><img src='imaxes/M26.png' style='max-width:100%; border-radius:8px; margin-top:10px;'>"
     },
     {
         id: "M27",
@@ -384,7 +384,7 @@ const misionesData = [
         linkGeoguessr: "https://www.geoguessr.com/challenge/CUn4gjdOBxNTEJuL",
         dificil: 20, medio: 50, facil: 150,
         tiempo: "3 min",
-        regalo: "<br><img src='Imaxes/R27.png' style='max-width:100%; border-radius:8px;'>",
+        regalo: "<br><img src='imaxes/R27.png' style='max-width:100%; border-radius:8px;'>",
         textoPostAcerto: "Somos uns borrachos non sei de que te sorprende aHahahahah"
     }
 ];

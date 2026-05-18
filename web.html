@@ -148,7 +148,7 @@
         <button class="btn btn-final-epic" onclick="abrirFinal()">🏆 DESBLOQUEAR AGASALLO FINAL 🏆</button>
     </div>
 
-    <button class="btn-random" id="btn-random-game" onclick="misionAleatoria()">🎲 XOGAR PISTA ALEATORIA 🎲</button>
+    <button class="btn-random" id="btn-random-game" onclick="micientosAleatoria()">🎲 XOGAR PISTA ALEATORIA 🎲</button>
 
     <h3>🎪 SUB-ESCENARIOS</h3>
     <div class="categorias-grid" id="categorias-container"></div>
@@ -188,7 +188,7 @@
     <h3 style="color: var(--white); margin-bottom: 30px;">Completaches a Xira Mundial do teu 32 Aniversario</h3>
     
     <p style="font-size: 1.2rem; line-height: 1.8;">Espero que o pasases xenial viaxando por todos estes recordos, os nosos e os dos colegas. Xa demostraches de sobra que es un experto da xeografía festiva e sentimental.</p>
-    <p style="font-size: 1.2rem;">Pero isto non remata aquí. Como ben sabes, as oposicións sácannos moito tempo... así que teño un dobre agasallo final preparado para ti!</p>
+    <p style="font-size: 1.2rem;">But agora toca viaxar de verdade (bueno, dende a cadeira do ordenador). Aquí tes o teu agasallo final:</p>
     
     <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-green); padding: 30px 20px; margin-top: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);">
         <h2 style="color: var(--neon-green); margin-top: 0; font-size: 1.2rem;">🎁 RECOMPENSA 1 🎁</h2>
@@ -197,7 +197,7 @@
 
     <div style="background: rgba(0,0,0,0.8); border: 2px dashed var(--neon-magenta); padding: 30px 20px; margin-top: 25px; border-radius: 15px; box-shadow: 0 0 20px rgba(255, 0, 127, 0.2);">
         <h2 style="color: var(--neon-magenta); margin-top: 0; font-size: 1.2rem;">💝 RECOMPENSA ESPECIAL EXTRA 💝</h2>
-        <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 15px; line-height: 1.5;">Porque sei o moito que custa estudar a oposición e o moito que te esforzas cada día... ¡Mereces un descanso real!</p>
+        <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 15px; line-height: 1.5;">Porque sei o moito que custa estudar a oposición e o moito que te esforzas cada dia... ¡Mereces un descanso real!</p>
         <img src="imaxes/RDIA.png" style="max-width: 100%; border-radius: 10px; border: 1px solid var(--neon-magenta); box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);">
     </div>
     
@@ -247,10 +247,19 @@
     }
 
     window.onload = () => {
-        // --- LIMPADOR AUTOMÁTICO ANTI-ERROS DE WORD ---
+        // --- GRUPADO INTELIXENTE ABSOLUTO (ANTI-ERROS DE TEXTO E CACHÉ) ---
+        // Forzamos que calquera variante que conteña "ESCONDITE", "VOLTIO" ou "CAMIÑAR"
+        // se unifique nun único nome perfecto. Así esquéceste de problemas de caché en misiones.js!
         misionesData.forEach(m => {
             if (m.categoria) {
-                m.categoria = m.categoria.trim().replace(/\s+/g, ' ').normalize("NFC");
+                let catUpper = m.categoria.toUpperCase();
+                if (catUpper.includes("ESCONDITE")) {
+                    m.categoria = "ESCONDITE INGLÉS (sen mover as mans nin os pés)";
+                } else if (catUpper.includes("VOLTIO")) {
+                    m.categoria = "UN VOLTIO";
+                } else if (catUpper.includes("CAMIÑAR") || catUpper.includes("CAMIÑO")) {
+                    m.categoria = "CAMIÑAR É FACER CAMIÑO";
+                }
             }
         });
 
@@ -350,7 +359,7 @@
         document.getElementById('cat-misiones-container').innerHTML = html;
     }
 
-    function misionAleatoria() {
+    function micientosAleatoria() {
         let disponibles = misionesData.filter(m => estadoJuego[m.id].estado !== "completada");
         if(disponibles.length === 0) return;
         let randomMision = disponibles[Math.floor(Math.random() * disponibles.length)];

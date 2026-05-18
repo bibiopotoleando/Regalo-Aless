@@ -187,7 +187,7 @@ const misionesData = [
     },
     {
         id: "M14",
-        categoria: "ESCONDITE INGLES (sen mover as mans nin os pés)",
+        categoria: "ESCONDITE INGLÉS (sen mover as mans nin os pés)",
         autor: "ÁXEL",
         titulo: "Yo sé lo que cobra la cajeta del Froiz porque se lo pregunté",
         texto: "Dando una vuelta con unos amigos, me encontré con Alba y contigo. Fuimos a tomar algo a este sitio y se nos unió alguien más. Tras varias cervezas, como si del programa de Broncano se tratase, se acabó hablando de dinero. También de ciertas figuras que se venden baratas para la gran calidad que tienen. Fue una pena que ninguno de los allí presentes fuese especialmente aficionado a ellas.",
